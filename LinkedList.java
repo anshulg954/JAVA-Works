@@ -1,6 +1,6 @@
 package data_structures;
 import java.util.Scanner;
-class LinkList{
+public class LinkedList{
 	Node first, head;
 	class Node{
 		String Name;
@@ -8,10 +8,6 @@ class LinkList{
 		String RollNo;
 		String Year;
 		Node next;
-		Node()
-		{
-			
-		}
 		Node(String a,String b, String c, String d)
 		{
 			Name = a;
@@ -21,23 +17,26 @@ class LinkList{
 			next = null;
 		}
 	}
-	public static LinkList insert(LinkList list,String a,String b,String c,String d)
+	public static LinkedList insert(LinkedList list,String a,String b,String c,String d)
 	{
-		if(list.first == null)
+		Node h = list.new Node(a,b,c,d);
+		h.next=null;
+		if(list.head == null)
 		{
-			Node h = list.new Node(a,b,c,d);
-			list.first = h;
 			list.head = h;
-			return list;
 		}
 		else
 		{
-			list.first.next = list.new Node(a,b,c,d); 
-			list.first = list.first.next;
-			return list;
+			Node curr = list.head;
+			while(curr.next != null)
+			{
+				curr = curr.next;
+			}
+			curr.next=h;
 		}
+		return list;
 	}
-	public static LinkList insertatBeg(LinkList list,String a,String b,String c,String d)
+	public static LinkedList insertatBeg(LinkedList list,String a,String b,String c,String d)
 	{
 		if(list.head == null)
 		{
@@ -52,58 +51,69 @@ class LinkList{
 		}
 		return list;
 	}
-	public static LinkList insertatend(LinkList list,String a,String b,String c,String d)
+	public static LinkedList insertatend(LinkedList list,String a,String b,String c,String d)
 	{
 		Node h = list.new Node(a,b,c,d);
 		Node temp = list.head;
 		if(list.head == null)
 		{
 			list.head = h;
-			return list;
+			h.next=null;
 		}
+		else{
 		while(temp.next != null)
 		{
 			temp = temp.next;
 		}
 		temp.next = h;
+		h.next=null;
+		}
 		return list;
 	}
-	public static LinkList deleteatBeg(LinkList list)
+	public static LinkedList deleteatBeg(LinkedList list)
 	{
 		if(list.head == null)
 		{
-			return list;
+	        System.out.println("Empty list");
 		}
 		else
 		{
 			Node h = list.head;
 			list.head = list.head.next;
-			return list;
-		}
-	}
-	public static LinkList beg(LinkList list)
-	{
-		if(list.head != null)
-			return list;
-		else
-			return list;
-	}
-	public static LinkList printList(LinkList list){
-		while(list.head != null)
-		{
-			System.out.print(list.head.Name + "->");
-			System.out.print(list.head.Branch + "->");
-			System.out.print(list.head.RollNo + "->");
-			System.out.print(list.head.Year + "->");
-			System.out.print("\n");
-			list.head = list.head.next;
 		}
 		return list;
 	}
-}
- class LinkedList{
-    public static void main(String[] args) {
-        LinkList list = new LinkList();
+	public static LinkedList deleteatend(LinkedList list)
+	{
+		if(list.head == null)
+		{
+	        System.out.println("Empty list");
+		}
+		else
+		{
+			Node curr=list.head;
+			while(curr.next != null)
+			{
+				curr.next=null;
+			}
+		}
+		return list;
+	}
+	public static void printList(LinkedList list){
+		Node temp;
+		temp=list.head;
+		while(temp != null)
+		{
+			System.out.print( "->"+temp.Name);
+			System.out.print( "->"+temp.Branch);
+			System.out.print( "->"+temp.RollNo);
+			System.out.print( "->"+temp.Year);
+			System.out.print("\n");
+			temp = temp.next;
+		}
+	}
+   public static void main(String[] args) {
+        LinkedList list = new LinkedList();
         Scanner inputNum = new Scanner(System.in);
         Scanner input = new Scanner(System.in);
         System.out.println("Enter number of students to input");
@@ -120,11 +130,39 @@ class LinkList{
         System.out.println("Enter year of student");
         String k=input.nextLine();
         i++;
-        list=list.insert(list,x,y,z,k);
+        list=list.insert(list,x,y,z,k); 
         }
-        list=list.printList(list); 
-        list=list.insertatend(list,"Random i/p","CSE","29","2nd");
-        list=list.insertatBeg(list,"xyz","CSE","30","2nd");
-        list=list.printList(list);         
+        System.out.println("LIST INITIALLY");
+        list.printList(list); 
+        System.out.println("ENTER RECORD FOR INSERTION AT THE BEGINNING");
+        System.out.println("Enter name of student");
+        String c=input.nextLine();
+        System.out.println("Enter branch of student");
+        String d=input.nextLine();
+        System.out.println("Enter rollno of student");
+        String e=input.nextLine();
+        System.out.println("Enter year of student");
+        String f=input.nextLine();
+        list=list.insertatBeg(list,c,d,e,f);
+        System.out.println("LIST AFTER INSERTION AT BEG");
+        list.printList(list);
+        System.out.println("ENTER RECORD FOR INSERTION AT THE END");
+        System.out.println("Enter name of student");
+        String g=input.nextLine();
+        System.out.println("Enter branch of student");
+        String h=input.nextLine();
+        System.out.println("Enter rollno of student");
+        String ii=input.nextLine();
+        System.out.println("Enter year of student");
+        String j=input.nextLine();
+        list=list.insertatend(list,g,h,ii,j);
+        System.out.println("LIST AFTER INSERTION AT THE END");
+        list.printList(list); 
+        System.out.println("LIST AFTER DELETION FROM THE BEG");
+        list=list.deleteatBeg(list);
+        list.printList(list);
+        System.out.println("LIST AFTER DELETION FROM THE END");
+        list=list.deleteatend(list);
+        list.printList(list);
     }	  
 }
